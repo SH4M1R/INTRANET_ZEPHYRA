@@ -1,0 +1,90 @@
+body {
+  background-color: #f4f7f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.container {
+  margin-top: 30px;
+  background: #ffffff;
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+h2 {
+  margin-bottom: 25px;
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+.btn-primary {
+  background-color: #2a9d8f;
+  border-color: #2a9d8f;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #21867a;
+  border-color: #21867a;
+}
+
+.table {
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(42, 157, 143, 0.2);
+}
+
+.table thead tr {
+  background-color: #2a9d8f;
+  color: #fff;
+  font-weight: 600;
+}
+
+.table tbody tr:hover {
+  background-color: #d1f2eb;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+  text-align: center;
+  padding: 12px 15px;
+}
+
+.btn-warning {
+  background-color: #e9c46a;
+  border-color: #e9c46a;
+  color: #000;
+  transition: background-color 0.3s ease;
+}
+
+.btn-warning:hover {
+  background-color: #d4b454;
+  border-color: #d4b454;
+  color: #000;
+}
+
+.btn-danger {
+  background-color: #e76f51;
+  border-color: #e76f51;
+  transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+  background-color: #cf563d;
+  border-color: #cf563d;
+}
+
+@media (max-width: 768px) {
+  .table-responsive {
+    overflow-x: auto;
+  }
+}
