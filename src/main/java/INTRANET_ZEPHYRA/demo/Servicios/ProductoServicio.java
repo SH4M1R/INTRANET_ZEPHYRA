@@ -6,4 +6,6 @@ import INTRANET_ZEPHYRA.demo.Entidad.Producto;
 
 public interface ProductoServicio {
 List<Producto> listaProductos();
+public Producto guardarProducto(Producto Producto);
+public Producto obtenerProducto(Integer idProducto);
 }

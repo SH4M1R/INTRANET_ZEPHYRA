@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import INTRANET_ZEPHYRA.demo.Entidad.Producto;
 
 @Service
@@ -15,4 +14,10 @@ public class ProductoServicioImpl implements ProductoServicio{
     public List<Producto> listaProductos(){
       return ProductoDAO.findAll();
     }
+
+    @Override
+    public Producto guardarProducto(Producto Producto) { return ProductoDAO.save(Producto);}
+
+    @Override
+    public Producto obtenerProducto(Integer idProducto) { return ProductoDAO.findById(idProducto).get();}
 }

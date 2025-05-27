@@ -2,7 +2,7 @@ package INTRANET_ZEPHYRA.demo.Entidad;
 
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,8 +31,8 @@ public class Producto {
     @Column(name = "stock", nullable = false)
     private Integer stock = 0;
 
-    @Column(name = "fecha_creacion", columnDefinition = "DATETIME")
-    private LocalDateTime fechaCreacion;
+    @Column(name = "fecha_creacion", columnDefinition = "DATE")
+private LocalDate fechaCreacion;
 
     @Column(name = "tamaño", length = 20)
     private String tamaño;
@@ -40,6 +40,22 @@ public class Producto {
     @Column(name = "color", length = 20)
     private String color;
 
+
+    public Producto() {
+    }
+
+    public Producto(Integer idProducto, String nombre, BigDecimal precio,
+                    String detalle, Integer stock, String tamaño, 
+                    String color , LocalDate fechaCreacion) {
+        this.idProducto = idProducto;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.detalle = detalle;
+        this.stock = stock;
+        this.tamaño = tamaño;
+        this.color = color;
+        this.idProducto = idProducto;
+    }
 
     public Integer getIdProducto() {   return idProducto; } 
     public void setIdProducto(Integer idProducto) {
@@ -61,8 +77,8 @@ public class Producto {
     public void setStock(Integer stock) {
         this.stock = stock; }
 
-    public LocalDateTime getFechaCreacion() { return fechaCreacion; }
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+    public LocalDate getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion; }
 
     public String getTamaño() { return tamaño; }
