@@ -20,4 +20,10 @@ public class ProductoServicioImpl implements ProductoServicio{
 
     @Override
     public Producto obtenerProducto(Integer idProducto) { return ProductoDAO.findById(idProducto).get();}
+
+    @Override
+    public Producto actualizarProducto(Producto Producto) { return ProductoDAO.save(Producto);}
+
+    @Override
+    public void eliminarProducto(Integer idProducto) { ProductoDAO.deleteById(idProducto);}
 }
