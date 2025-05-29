@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <title>Login Zephyra</title>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+    <form th:action="@{/login}" method="post">
+        <label>Usuario:</label><input type="text" name="username" /><br/>
+        <label>Contraseña:</label><input type="password" name="password" /><br/>
+        <button type="submit">Ingresar</button>
+    </form> <br>
+    <div th:if="${param.error}">
+        Usuario o contraseña incorrectos.
+    </div>
+    <div th:if="${param.logout}">
+        Has cerrado sesión correctamente.
+    </div>
+</body>
+</html>
