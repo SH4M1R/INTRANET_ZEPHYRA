@@ -7,28 +7,18 @@
     <link rel="stylesheet" href="/css/Listas.css">
   </head>
   <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
   <div class="container-fluid">
     <a class="navbar-brand text-white" th:href="@{/inicio}">ZEPHYRA</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link text-white" th:href="@{/listaproductos}">Administrar Productos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="*">Administrar Usuarios</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="*">Panel de Control</a>
-        </li>
-        <li class="nav-item">
-      <a class="nav-link text-white" th:href="@{/logout}">Cerrar sesión</a>
-      </li>
+        <li class="nav-item"><a class="nav-link text-white" th:href="@{/listaproductos}">Administrar Productos</a></li>
+        <li class="nav-item"><a class="nav-link text-white" th:href="@{/usuarios}">Administrar Usuarios</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#">Panel de Control</a></li>
+        <li class="nav-item"><a class="nav-link text-white" th:href="@{/logout}">Cerrar sesión</a></li>
       </ul>
     </div>
   </div>

@@ -19,17 +19,13 @@ import INTRANET_ZEPHYRA.demo.Servicios.UsuarioServicio;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UsuarioServicio usuarioServicio;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // Usamos DaoAuthenticationProvider con tu servicio y encoder
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
+    public DaoAuthenticationProvider authenticationProvider(UsuarioServicio usuarioServicio) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(usuarioServicio);
         authProvider.setPasswordEncoder(passwordEncoder());
@@ -40,12 +36,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeHttpRequests()
-                .requestMatchers("/login", "/css/**", "/js/**").permitAll()
+                .requestMatchers("/login","/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
             .and()
             .formLogin()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/inicio", true) // ← redirección después del login
+                .defaultSuccessUrl("/inicio", true)
             .and()
             .logout()
                 .logoutUrl("/logout")
@@ -57,10 +53,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http, DaoAuthenticationProvider authenticationProvider) throws Exception {
         AuthenticationManagerBuilder auth = http.getSharedObject(AuthenticationManagerBuilder.class);
-        auth.authenticationProvider(authenticationProvider());
+        auth.authenticationProvider(authenticationProvider);
         return auth.build();
     }
 }
+
 
