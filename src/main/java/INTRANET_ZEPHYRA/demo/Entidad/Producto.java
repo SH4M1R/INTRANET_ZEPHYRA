@@ -2,7 +2,6 @@ package INTRANET_ZEPHYRA.demo.Entidad;
 
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,9 +30,6 @@ public class Producto {
     @Column(name = "stock", nullable = false)
     private Integer stock = 0;
 
-    @Column(name = "fecha_creacion", columnDefinition = "DATE")
-private LocalDate fechaCreacion;
-
     @Column(name = "tamaño", length = 20)
     private String tamaño;
 
@@ -46,7 +42,7 @@ private LocalDate fechaCreacion;
 
     public Producto(Integer idProducto, String nombre, BigDecimal precio,
                     String detalle, Integer stock, String tamaño, 
-                    String color , LocalDate fechaCreacion) {
+                    String color) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.precio = precio;
@@ -76,10 +72,6 @@ private LocalDate fechaCreacion;
     public Integer getStock() { return stock; }
     public void setStock(Integer stock) {
         this.stock = stock; }
-
-    public LocalDate getFechaCreacion() { return fechaCreacion; }
-    public void setFechaCreacion(LocalDate fechaCreacion) {
-        this.fechaCreacion = fechaCreacion; }
 
     public String getTamaño() { return tamaño; }
     public void setTamaño(String tamaño) {
