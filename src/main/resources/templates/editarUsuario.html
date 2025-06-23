@@ -45,7 +45,7 @@
                      name="rolId"
                      th:id="'rol_' + ${rol.id}"
                      th:value="${rol.id}"
-                     th:checked="${usuario.roles.?[id == rol.id].size() > 0}" />
+                     th:checked="${usuario.roles != null and #lists.contains(usuario.roles, rol)}">
               <label class="form-check-label" th:for="'rol_' + ${rol.id}" th:text="${rol.nombre}"></label>
             </div>
           </div>

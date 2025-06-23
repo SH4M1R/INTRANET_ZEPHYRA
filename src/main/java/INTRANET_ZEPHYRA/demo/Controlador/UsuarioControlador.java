@@ -2,7 +2,6 @@ package INTRANET_ZEPHYRA.demo.Controlador;
 
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,29 +21,22 @@ public class UsuarioControlador {
     @Autowired
     private RolServicio rolServicio;
 
-    // LISTAR USUARIOS
     @GetMapping("/usuarios")
     public String listarUsuarios(Model model) {
         model.addAttribute("usuarios", usuarioServicio.listarUsuarios());
         return "listaUsuario";
     }
 
-    // FORMULARIO NUEVO USUARIO
     @GetMapping("/usuarios/nuevo")
     public String nuevoUsuario(Model model) {
-        Usuario usuario = new Usuario();
-        List<Rol> roles = rolServicio.listarRoles(); // Obtener todos los roles disponibles
-
-        model.addAttribute("usuario", usuario);
-        model.addAttribute("roles", roles);
-
+        model.addAttribute("usuario", new Usuario());
+        model.addAttribute("roles", rolServicio.listarRoles());
         return "nuevoUsuario";
     }
 
-    // GUARDAR NUEVO O ACTUALIZADO
     @PostMapping("/usuarios/guardar")
     public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario,
-                                @RequestParam("rolId") Long rolId) {
+                                 @RequestParam("rolId") Long rolId) {
         Rol rol = rolServicio.obtenerRolPorId(rolId);
         usuario.setRoles(Set.of(rol));
 
@@ -53,22 +45,26 @@ public class UsuarioControlador {
         } else {
             usuarioServicio.actualizarUsuario(usuario);
         }
+
         return "redirect:/usuarios";
     }
 
-    // FORMULARIO DE EDICIÓN
     @GetMapping("/usuarios/editar/{id}")
-    public String editarUsuario(@PathVariable Long id, Model model) {
-        Usuario usuario = usuarioServicio.obtenerUsuarioPorId(id)
-            .orElseThrow(() -> new IllegalArgumentException("ID de usuario inválido: " + id));
+public String editarUsuario(@PathVariable Long id, Model model) {
+    Usuario usuario = usuarioServicio.obtenerUsuarioPorId(id)
+        .orElseThrow(() -> new IllegalArgumentException("ID de usuario inválido: " + id));
 
-        List<Rol> roles = rolServicio.listarRoles();
-        model.addAttribute("usuario", usuario);
-        model.addAttribute("roles", roles);
-        return "editarUsuario";
-    }
+    System.out.println("Usuario a editar: " + usuario.getUsername());
+    System.out.println("Roles actuales: " + usuario.getRoles());
 
-    // ELIMINAR USUARIO
+    List<Rol> roles = rolServicio.listarRoles();
+    model.addAttribute("usuario", usuario);
+    model.addAttribute("roles", roles);
+
+    return "editarUsuario";
+}
+
+
     @GetMapping("/usuarios/eliminar/{id}")
     public String eliminarUsuario(@PathVariable Long id) {
         usuarioServicio.eliminarUsuario(id);
