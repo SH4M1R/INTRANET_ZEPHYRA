@@ -21,7 +21,6 @@ public class UsuarioServicio implements UserDetailsService {
     private final UsuarioRepositorio usuarioRepositorio;
     private final PasswordEncoder passwordEncoder;
 
-    // Constructor con inyección explícita
     public UsuarioServicio(UsuarioRepositorio usuarioRepositorio, PasswordEncoder passwordEncoder) {
         this.usuarioRepositorio = usuarioRepositorio;
         this.passwordEncoder = passwordEncoder;
@@ -33,7 +32,7 @@ public class UsuarioServicio implements UserDetailsService {
             .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
         Set<GrantedAuthority> autoridades = usuario.getRoles().stream()
-            .map(rol -> new SimpleGrantedAuthority(rol.getNombre()))
+            .map(rol -> new SimpleGrantedAuthority("ROLE_" + rol.getNombre())) // prefijo ROLE_
             .collect(Collectors.toSet());
 
         return new org.springframework.security.core.userdetails.User(
@@ -50,28 +49,25 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarioRepositorio.save(usuario);
     }
 
-    // Leer usuario por id
     public Optional<Usuario> obtenerUsuarioPorId(Long id) {
         return usuarioRepositorio.findById(id);
     }
 
-    // Listar todos los usuarios
     public List<Usuario> listarUsuarios() {
         return usuarioRepositorio.findAll();
     }
 
-    // Actualizar usuario (asumiendo que ya tiene id)
     public Usuario actualizarUsuario(Usuario usuario) {
-        // Opcional: si la contraseña fue modificada, encriptarla
         if (usuario.getPassword() != null && !usuario.getPassword().isEmpty()) {
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        } else {
+            // Mantener contraseña existente si no fue cambiada
+            usuarioRepositorio.findById(usuario.getId()).ifPresent(existing -> usuario.setPassword(existing.getPassword()));
         }
         return usuarioRepositorio.save(usuario);
     }
 
-    // Eliminar usuario por id
     public void eliminarUsuario(Long id) {
         usuarioRepositorio.deleteById(id);
     }
-
 }

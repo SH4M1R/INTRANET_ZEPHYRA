@@ -17,4 +17,9 @@ public class RolServicio {
     public List<Rol> listarRoles() {
         return rolRepositorio.findAll();
     }
+
+    public Rol obtenerRolPorId(Long id) {
+        return rolRepositorio.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Rol no encontrado con ID: " + id));
+    }
 }

@@ -1,15 +1,12 @@
 package INTRANET_ZEPHYRA.demo.Controlador;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import INTRANET_ZEPHYRA.demo.Entidad.Rol;
 import INTRANET_ZEPHYRA.demo.Entidad.Usuario;
@@ -25,66 +22,56 @@ public class UsuarioControlador {
     @Autowired
     private RolServicio rolServicio;
 
-    // Mostrar lista de usuarios
+    // LISTAR USUARIOS
     @GetMapping("/usuarios")
     public String listarUsuarios(Model model) {
-        List<Usuario> usuarios = usuarioServicio.listarUsuarios();
-        model.addAttribute("usuarios", usuarios);
-        return "listaUsuario";  // Thymeleaf: listaUsuario.html
+        model.addAttribute("usuarios", usuarioServicio.listarUsuarios());
+        return "listaUsuario";
     }
 
-    public String mostrarFormularioEdicion(@PathVariable Long id, Model model) {
-    Optional<Usuario> usuarioOpt = usuarioServicio.obtenerUsuarioPorId(id);
-    if (usuarioOpt.isPresent()) {
-        model.addAttribute("usuario", usuarioOpt.get());
-        return "formularioUsuario"; // reutiliza vista del formulario
-    } else {
-        return "redirect:/usuarios";
-    }
-}
-
-    // Mostrar formulario para crear usuario nuevo
+    // FORMULARIO NUEVO USUARIO
     @GetMapping("/usuarios/nuevo")
-    public String mostrarFormularioNuevoUsuario(Model model) {
+    public String nuevoUsuario(Model model) {
         Usuario usuario = new Usuario();
-        List<Rol> roles = rolServicio.listarRoles();
+        List<Rol> roles = rolServicio.listarRoles(); // Obtener todos los roles disponibles
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("roles", roles);
 
-        return "nuevoUsuario"; // Thymeleaf: nuevoUsuario.html
+        return "nuevoUsuario";
     }
 
-    // Procesar formulario para crear nuevo usuario
+    // GUARDAR NUEVO O ACTUALIZADO
     @PostMapping("/usuarios/guardar")
-public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario) {
-    if (usuario.getId() == null) {
-        usuarioServicio.crearUsuario(usuario);
-    } else {
-        usuarioServicio.actualizarUsuario(usuario);
-    }
-    return "redirect:/usuarios";
-}
+    public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario,
+                                @RequestParam("rolId") Long rolId) {
+        Rol rol = rolServicio.obtenerRolPorId(rolId);
+        usuario.setRoles(Set.of(rol));
 
- public UsuarioControlador(UsuarioServicio usuarioServicio) {
-        this.usuarioServicio = usuarioServicio;
+        if (usuario.getId() == null) {
+            usuarioServicio.crearUsuario(usuario);
+        } else {
+            usuarioServicio.actualizarUsuario(usuario);
+        }
+        return "redirect:/usuarios";
     }
 
-    @GetMapping("/editar/{id}")
+    // FORMULARIO DE EDICIÓN
+    @GetMapping("/usuarios/editar/{id}")
     public String editarUsuario(@PathVariable Long id, Model model) {
-         List<Rol> roles = rolServicio.listarRoles();
         Usuario usuario = usuarioServicio.obtenerUsuarioPorId(id)
             .orElseThrow(() -> new IllegalArgumentException("ID de usuario inválido: " + id));
-        
-        model.addAttribute("usuario", usuario);
-        model.addAttribute("roles", roles); // Debes tener este método o pasar los roles desde el servicio
 
-        return "formularioUsuario"; // Asegúrate que ese sea el nombre correcto del HTML
+        List<Rol> roles = rolServicio.listarRoles();
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("roles", roles);
+        return "editarUsuario";
     }
 
-@GetMapping("/usuarios/eliminar/{id}")
-public String eliminarUsuario(@PathVariable Long id) {
-    usuarioServicio.eliminarUsuario(id);
-    return "redirect:/usuarios";
-}
+    // ELIMINAR USUARIO
+    @GetMapping("/usuarios/eliminar/{id}")
+    public String eliminarUsuario(@PathVariable Long id) {
+        usuarioServicio.eliminarUsuario(id);
+        return "redirect:/usuarios";
+    }
 }
