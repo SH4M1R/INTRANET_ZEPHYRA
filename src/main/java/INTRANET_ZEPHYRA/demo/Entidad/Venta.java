@@ -1,65 +1,57 @@
 package INTRANET_ZEPHYRA.demo.Entidad;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Ventas")
+@Table(name = "ventas")
 public class Venta {
-@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idVenta")
-    private Integer idVenta;
+    private Long idVenta;
 
-    @Column(name = "fecha", columnDefinition = "DATE")
-    private LocalDate fecha;
+    @Column(name = "fecha", nullable = false)
+    private LocalDateTime fecha;
 
-    @Column(name = "total", precision = 10, scale = 2)
+    @Column(name = "total", nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
 
-    @Column(name = "idPago", nullable = false)
-    private Integer idPago;
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
+    private List<DetalleVenta> detalles;
 
-    // Relación con Producto
-    @ManyToOne
-    @JoinColumn(name = "idProducto", nullable = false)
-    private Producto producto;
+    public Venta() {}
 
-    public Venta() {
-    }
-
-    public Venta(Integer idVenta, LocalDate fecha, BigDecimal total, Integer idPago, Producto producto) {
-        this.idVenta = idVenta;
+    public Venta(LocalDateTime fecha, BigDecimal total, List<DetalleVenta> detalles) {
         this.fecha = fecha;
         this.total = total;
-        this.idPago = idPago;
-        this.producto = producto;
+        this.detalles = detalles;
     }
 
-    // Getters y setters
-
-    public Integer getIdVenta() {
+    public Long getIdVenta() {
         return idVenta;
     }
 
-    public void setIdVenta(Integer idVenta) {
+    public void setIdVenta(Long idVenta) {
         this.idVenta = idVenta;
     }
 
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 
@@ -71,19 +63,11 @@ public class Venta {
         this.total = total;
     }
 
-    public Integer getIdPago() {
-        return idPago;
+    public List<DetalleVenta> getDetalles() {
+        return detalles;
     }
 
-    public void setIdPago(Integer idPago) {
-        this.idPago = idPago;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setDetalles(List<DetalleVenta> detalles) {
+        this.detalles = detalles;
     }
 }
