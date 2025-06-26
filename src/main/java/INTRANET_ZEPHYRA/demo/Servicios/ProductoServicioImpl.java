@@ -26,4 +26,8 @@ public class ProductoServicioImpl implements ProductoServicio{
 
     @Override
     public void eliminarProducto(Integer idProducto) { ProductoDAO.deleteById(idProducto);}
+
+    public List<Producto> buscarPorNombre(String nombre) {
+        return ProductoDAO.findByNombreContainingIgnoreCase(nombre);
+    }
 }

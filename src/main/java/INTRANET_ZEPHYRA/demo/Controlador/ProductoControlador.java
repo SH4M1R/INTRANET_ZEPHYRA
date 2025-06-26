@@ -14,6 +14,7 @@ import INTRANET_ZEPHYRA.demo.Servicios.ProductoServicio;
 public class ProductoControlador {
     @Autowired
     private ProductoServicio ProductoServicio;
+
     @GetMapping("/listaproductos")
 public String listaProductos(Model model) {
     model.addAttribute("listaproductos", ProductoServicio.listaProductos());

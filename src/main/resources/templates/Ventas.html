@@ -10,54 +10,102 @@
 </head>
 <body>
 <div th:replace="fragmentos/navbar :: navbar"></div>
+
 <div class="main-content">
-<div class="container">
-    <h2>Registrar Venta</h2>
-
-    <div class="mb-3">
-        <label for="productoSelect" class="form-label">Buscar producto:</label>
-        <select id="productoSelect" class="form-select" onchange="agregarProductoSeleccionado()">
-            <option value="" disabled selected>Seleccione un producto...</option>
-            <th:block th:each="producto : ${productos}">
-                <option 
-                    th:value="${producto.idProducto}" 
-                    th:data-nombre="${producto.nombre}" 
-                    th:data-precio="${producto.precio}"
-                    th:data-stock="${producto.stock}">
-                    [[${producto.nombre}]] - S/ [[${producto.precio}]] (Stock: [[${producto.stock}]])
-                </option>
-            </th:block>
-        </select>
-    </div>
-
-    <form action="#" th:action="@{/registrar}" th:object="${detalles}" method="post">
-        <table class="table" id="tablaProductos">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Precio (S/)</th>
-                    <th>Cantidad</th>
-                    <th>Subtotal</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody id="detalleVentaBody">
-                <!-- Filas se agregan dinámicamente -->
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3" class="text-end">Total:</td>
-                    <td colspan="2" id="total">S/ 0.00</td>
-                </tr>
-            </tfoot>
-        </table>
-
-        <div class="text-end">
-            <button type="submit" class="btn btn-primary">Registrar Venta</button>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>REALIZAR VENTA</h2>
+            <div>
+                <label class="fw-bold">N° de Venta:</label>
+                <span th:text="${numeroVenta}">0001</span>
+            </div>
         </div>
-    </form>
-</div>
 
+        <div class="mb-3">
+            <label for="nombreCliente" class="form-label">Nombre del Cliente (opcional):</label>
+            <input type="text" id="nombreCliente" name="nombreCliente" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <input type="text" id="buscador" class="form-control" placeholder="Buscar producto...">
+            <div id="resultado-busqueda" class="mt-2"></div>
+        </div>
+
+        <div class="table-responsive mb-3" id="tablaBusquedaContainer" style="display: none;">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaBusquedaProductos">
+                </tbody>
+            </table>
+        </div>
+
+        <form action="#" th:action="@{/registrar}" th:object="${detalles}" method="post">
+            <table class="table" id="tablaProductos">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio (S/)</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Opción</th>
+                    </tr>
+                </thead>
+                <tbody id="detalleVentaBody">
+                    <!-- Filas dinámicas -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end">TOTAL:</td>
+                        <td colspan="2" id="total">S/ 0.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="mb-3">
+                <label for="metodoPago" class="form-label">Método de Pago:</label>
+                <select id="metodoPago" class="form-select" onchange="cambiarMetodoPago()">
+                    <option value="" selected disabled>Seleccione un método...</option>
+                    <option value="efectivo">Efectivo</option>
+                    <option value="tarjeta">Tarjeta</option>
+                    <option value="yape">Yape</option>
+                </select>
+            </div>
+
+            <div class="mb-3" id="pagoEfectivo" style="display: none;">
+                <label for="montoPagado" class="form-label">Monto recibido (S/):</label>
+                <input type="number" class="form-control" id="montoPagado" onchange="calcularVuelto()" min="0">
+                <div class="mt-2">
+                    <strong>Vuelto: </strong><span id="vueltoTexto">S/ 0.00</span>
+                </div>
+            </div>
+
+            <div class="mb-3" id="pagoTarjeta" style="display: none;">
+                <label for="numeroTarjeta" class="form-label">Número de tarjeta:</label>
+                <input type="text" class="form-control" id="numeroTarjeta" placeholder="XXXX-XXXX-XXXX-XXXX">
+                <input type="text" class="form-control" id="ff/vv" placeholder="ff/vv">
+                <input type="text" class="form-control" id="cvv" placeholder="cvv">
+            </div>
+
+            <div class="mb-3" id="pagoYape" style="display: none;">
+                <label class="form-label">Escanea el QR con Yape:</label><br>
+                <img src="/img/qrYape.jpg" alt="QR Yape" style="width: 150px; height: 150px;">
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+                <button type="submit" class="btn btn-primary">Aceptar</button>
+                <button type="button" class="btn btn-success" onclick="imprimirVoucher()">Imprimir Voucher</button>
+                <button type="button" class="btn btn-danger" onclick="location.reload()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
 <script th:src="@{/js/ventas.js}"></script>
 </body>
 </html>
