@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             const fila = document.createElement("tr");
                             fila.innerHTML = `
                                 <td>${producto.nombre}</td>
+                                <td>${producto.color}</td>
+                                <td>${producto.tamaño}</td>
                                 <td>S/ ${producto.precio.toFixed(2)}</td>
                                 <td>${producto.stock}</td>
                                 <td><button class="btn btn-success btn-sm" onclick='agregarProducto(${JSON.stringify(producto)})'>Agregar</button></td>
@@ -124,5 +126,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const metodo = document.getElementById("metodoPago");
     if (metodo) {
         metodo.addEventListener("change", cambiarMetodoPago);
+    }
+});
+
+document.querySelector("form").addEventListener("submit", function(e) {
+    const metodo = document.getElementById("metodoPago").value;
+    if (metodo === "efectivo") {
+        const montoPagado = parseFloat(document.getElementById("montoPagado").value) || 0;
+        const totalTexto = document.getElementById("total").innerText.replace("S/", "").trim();
+        const total = parseFloat(totalTexto) || 0;
+
+        if (montoPagado < total) {
+            alert("El monto recibido es menor al total. No se puede realizar la venta.");
+            e.preventDefault(); // Cancela envío del formulario
+        }
     }
 });
