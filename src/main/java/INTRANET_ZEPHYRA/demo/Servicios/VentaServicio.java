@@ -20,7 +20,7 @@ public class VentaServicio {
     @Autowired
     private ProductoDAO productoDAO;
 
-    public Venta registrarVenta(List<DetalleVenta> detalles) {
+    public void registrarVenta(List<DetalleVenta> detalles) {
         Venta venta = new Venta();
         venta.setFecha(LocalDateTime.now());
 
@@ -41,6 +41,35 @@ public class VentaServicio {
         venta.setTotal(total);
         venta.setDetalles(detalles);
 
-        return ventaDAO.save(venta);
+        ventaDAO.save(venta);
+
     }
+
+//    public void registrarVenta(List<DetalleVenta> detalles) {
+//        Venta venta = new Venta();
+//        venta.setFecha(LocalDateTime.now());
+//
+//        double total = 0.0;
+//
+//        for (DetalleVenta d : detalles) {
+//            Producto producto = productoDAO.findById(d.getProducto().getIdProducto()).orElseThrow();
+//            double precioUnitario = producto.getPrecio(); // Asume que getPrecio() devuelve double
+//            d.setPrecioUnitario(precioUnitario);
+//
+//            double subtotal = precioUnitario * d.getCantidad();
+//            d.setSubtotal(subtotal);
+//            d.setVenta(venta);
+//
+//            producto.setStock(producto.getStock() - d.getCantidad());
+//            productoDAO.save(producto);
+//
+//            total += subtotal;
+//        }
+
+//        venta.setTotal(total);
+//        venta.setDetalles(detalles);
+//
+//        ventaDAO.save(venta);
+
+
 }

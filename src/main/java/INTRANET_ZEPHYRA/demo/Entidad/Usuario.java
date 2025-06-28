@@ -1,6 +1,8 @@
 package INTRANET_ZEPHYRA.demo.Entidad;
 
 import jakarta.persistence.*;
+
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -25,7 +27,7 @@ public class Usuario {
         joinColumns = @JoinColumn(name = "usuario_id"),
         inverseJoinColumns = @JoinColumn(name = "rol_id")
     )
-    private Set<Rol> roles;
+    private Set<Rol> roles = new HashSet<>();;
 
     // Getters y setters
     public Long getId() { return id; }
@@ -42,4 +44,14 @@ public class Usuario {
 
     public Set<Rol> getRoles() { return roles; }
     public void setRoles(Set<Rol> roles) { this.roles = roles; }
+
+    public void agregarRol(Rol rol) {
+        this.roles.add(rol);
+    }
+
+    public void quitarRol(Rol rol) {
+        this.roles.remove(rol);
+    }
+
+
 }

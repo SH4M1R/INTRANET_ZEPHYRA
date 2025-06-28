@@ -1,5 +1,7 @@
 package INTRANET_ZEPHYRA.demo.Controlador;
 
+import INTRANET_ZEPHYRA.demo.Servicios.ExcelExportServicio;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,10 +12,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import INTRANET_ZEPHYRA.demo.Entidad.Producto;
 import INTRANET_ZEPHYRA.demo.Servicios.ProductoServicio;
 
+import java.io.IOException;
+import java.util.List;
+
 @Controller
 public class ProductoControlador {
     @Autowired
     private ProductoServicio ProductoServicio;
+
+    @Autowired
+    private ExcelExportServicio excelExportServicio;
 
     @GetMapping("/listaproductos")
 public String listaProductos(Model model) {
@@ -53,5 +61,11 @@ public String guardarProducto(@ModelAttribute("producto") Producto producto) {
     public String eliminarProducto(@PathVariable Integer idProducto) {
         ProductoServicio.eliminarProducto(idProducto);
         return "redirect:/listaproductos";
+    }
+
+    @GetMapping("/productos/exportar")
+    public void exportarExcel(HttpServletResponse response) throws IOException {
+        List<Producto> productos = ProductoServicio.listaProductos();
+        ExcelExportServicio.exportar(productos, response);
     }
 }
