@@ -16,7 +16,7 @@
         <div class="card shadow">
             <div class="card-header bg-success text-white"></div>
             <div class="card-body">
-                <form th:action="@{/usuarios/registrar}" th:object="${usuario}" method="post">
+                <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
                     <input type="hidden" th:field="*{id}" />
 
                     <div class="mb-3">
@@ -37,13 +37,12 @@
                     <div class="mb-3">
                         <label class="form-label">Rol:</label>
                         <div class="form-check" th:each="rol : ${roles}">
-                            <!-- <input class="form-check-input"
+                            <input class="form-check-input"
                                 type="radio"
                                 name="rolId"
                                 th:id="'rol_' + ${rol.id}"
                                 th:value="${rol.id}"
-                                required /> -->
-                                Rol: <input type="text" name="rol" placeholder="ADMIN o CLIENTE"/><br/>
+                                required />
                             <label class="form-check-label" th:for="'rol_' + ${rol.id}" th:text="${rol.nombre}"></label>
                         </div>
                     </div>

@@ -20,9 +20,6 @@ public class ProductoControlador {
     @Autowired
     private ProductoServicio ProductoServicio;
 
-    @Autowired
-    private ExcelExportServicio excelExportServicio;
-
     @GetMapping("/listaproductos")
 public String listaProductos(Model model) {
     model.addAttribute("listaproductos", ProductoServicio.listaProductos());

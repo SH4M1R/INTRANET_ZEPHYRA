@@ -81,12 +81,10 @@ function actualizarTotal() {
 function cambiarMetodoPago() {
     const metodo = document.getElementById("metodoPago").value;
 
-    // Ocultar todos
     document.getElementById("pagoEfectivo").style.display = "none";
     document.getElementById("pagoTarjeta").style.display = "none";
     document.getElementById("pagoYape").style.display = "none";
 
-    // Mostrar según la opción
     if (metodo === "efectivo") {
         document.getElementById("pagoEfectivo").style.display = "block";
     } else if (metodo === "tarjeta") {
@@ -122,7 +120,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // También conecta evento para método de pago
     const metodo = document.getElementById("metodoPago");
     if (metodo) {
         metodo.addEventListener("change", cambiarMetodoPago);
@@ -138,7 +135,7 @@ document.querySelector("form").addEventListener("submit", function(e) {
 
         if (montoPagado < total) {
             alert("El monto recibido es menor al total. No se puede realizar la venta.");
-            e.preventDefault(); // Cancela envío del formulario
+            e.preventDefault();
         }
     }
 });

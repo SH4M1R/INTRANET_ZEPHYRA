@@ -1,7 +1,5 @@
 package INTRANET_ZEPHYRA.demo.Servicios;
 
-import INTRANET_ZEPHYRA.demo.DAO.RolRepositorio;
-import INTRANET_ZEPHYRA.demo.Entidad.Rol;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,27 +44,10 @@ public class UsuarioServicio implements UserDetailsService {
         );
     }
 
-//    public void  crearUsuario(String username, String password, String nombre) {
-//        Usuario usuario = new Usuario();
-//        usuario.setUsername(username);
-//        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-//
-//        Rol rol = RolRepositorio.findByNombre(nombre)
-//                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
-//        usuario.agregarRol(rol);
-//        return usuarioRepositorio.save(usuario);
-//    }
-
-    public void crearUsuario(Usuario usuario) {
-//        Usuario usuario = new Usuario();
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword())); // Asegúrate que venga sin codificar
-//        Rol rol = RolRepositorio.findByNombre(nombre)
-//                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
-//        usuario.agregarRol(rol);
-
-        usuarioRepositorio.save(usuario);
+    public Usuario crearUsuario(Usuario usuario) {
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        return usuarioRepositorio.save(usuario);
     }
-
 
     public Optional<Usuario> obtenerUsuarioPorId(Long id) {
         return usuarioRepositorio.findById(id);
@@ -89,6 +70,4 @@ public class UsuarioServicio implements UserDetailsService {
     public void eliminarUsuario(Long id) {
         usuarioRepositorio.deleteById(id);
     }
-
-
 }
