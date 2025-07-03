@@ -1,3 +1,36 @@
+.sidebar {
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    left: -260px;
+  }
+
+  .sidebar.show-sidebar {
+    left: 0;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+}
+
+.toggle-sidebar {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1100;
+  background-color: #157347;
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 20px;
+}
+
 .main-content {
     margin-left: 260px;
     padding: 20px;

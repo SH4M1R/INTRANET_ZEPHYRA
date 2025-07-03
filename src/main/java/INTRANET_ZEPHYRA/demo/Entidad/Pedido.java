@@ -32,11 +32,9 @@ public class Pedido {
     @Column(name = "estado", length = 50)
     private String estado;
 
-    // Constructor vacío
     public Pedido() {
     }
 
-    // Constructor con parámetros
     public Pedido(Integer idPedido, LocalDate fecha, BigDecimal total, Integer idProducto, Integer cantidad, String estado) {
         this.idPedido = idPedido;
         this.fecha = fecha;
@@ -45,8 +43,6 @@ public class Pedido {
         this.cantidad = cantidad;
         this.estado = estado;
     }
-
-    // Getters y setters
 
     public Integer getIdPedido() {
         return idPedido;

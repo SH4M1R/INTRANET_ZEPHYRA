@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import INTRANET_ZEPHYRA.demo.Entidad.Rol;
 import INTRANET_ZEPHYRA.demo.Entidad.Usuario;
 import INTRANET_ZEPHYRA.demo.Servicios.RolServicio;
@@ -33,15 +32,6 @@ public class UsuarioControlador {
         model.addAttribute("roles", rolServicio.listarRoles());
         return "nuevoUsuario";
     }
-
-//    @PostMapping("/registrar")
-//    public String registrarNuevo(@RequestParam String username,
-//                                 @RequestParam String password,
-//                                 @RequestParam String rol) {
-//        usuarioServicio.crearUsuario(username, password, rol);
-//        return "redirect:/usuarios";
-//    }
-//}
 
     @PostMapping("/usuarios/guardar")
     public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario,

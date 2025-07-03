@@ -1,7 +1,6 @@
 package INTRANET_ZEPHYRA.demo.Entidad;
 
 import jakarta.persistence.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,7 +28,6 @@ public class Usuario {
     )
     private Set<Rol> roles = new HashSet<>();;
 
-    // Getters y setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -52,6 +50,5 @@ public class Usuario {
     public void quitarRol(Rol rol) {
         this.roles.remove(rol);
     }
-
 
 }

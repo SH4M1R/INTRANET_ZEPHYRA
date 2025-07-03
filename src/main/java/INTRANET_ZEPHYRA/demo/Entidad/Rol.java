@@ -1,7 +1,6 @@
 package INTRANET_ZEPHYRA.demo.Entidad;
 
 import java.util.Set;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +23,6 @@ public class Rol {
     @ManyToMany(mappedBy = "roles")
     private Set<Usuario> usuarios;
 
-    // Getters y setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

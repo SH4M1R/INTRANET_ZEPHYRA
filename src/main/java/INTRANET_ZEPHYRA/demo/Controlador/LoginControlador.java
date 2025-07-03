@@ -14,9 +14,4 @@ public class LoginControlador {
     public String accessDenied() {
         return "accessDenied";
     }
-
-    @GetMapping("/inicio")
-    public String inicio() {
-        return "inicio";  // Página principal tras login
-    }
 }

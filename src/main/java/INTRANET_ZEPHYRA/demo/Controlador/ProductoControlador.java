@@ -42,18 +42,15 @@ public String guardarProducto(@ModelAttribute("producto") Producto producto) {
     public String actualizarProducto(@PathVariable Integer idProducto, Model model) {
         Producto producto = ProductoServicio.obtenerProducto(idProducto);
         model.addAttribute("producto", producto);
-        return "editarProducto";  // Nombre de la vista para editar
+        return "editarProducto";
     }
-
-    // --- NUEVO: Método para actualizar el producto ---
+    
     @PostMapping("/producto/actualizar")
     public String actualizarProducto(@ModelAttribute("producto") Producto producto) {
-        // Aquí guardamos el producto actualizado
         ProductoServicio.guardarProducto(producto);
         return "redirect:/listaproductos";
     }
 
-    // --- NUEVO: Método para eliminar producto ---
     @GetMapping("/producto/eliminar/{idProducto}")
     public String eliminarProducto(@PathVariable Integer idProducto) {
         ProductoServicio.eliminarProducto(idProducto);

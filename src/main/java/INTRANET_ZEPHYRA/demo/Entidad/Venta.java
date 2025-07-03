@@ -1,66 +1,75 @@
 package INTRANET_ZEPHYRA.demo.Entidad;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "ventas")
 public class Venta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idVenta")
-    private Long idVenta;
+    private Long id;
 
-    @Column(name = "fecha", nullable = false)
-    private LocalDateTime fecha;
+    private String nombreCliente;
 
-    @Column(name = "total", nullable = false, precision = 10, scale = 2)
-    private BigDecimal total;
+    private LocalDate fecha;
 
-    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
-    private List<DetalleVenta> detalles;
+    private Double totalVenta;
 
-    public Venta() {}
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
-    public Venta(LocalDateTime fecha, BigDecimal total, List<DetalleVenta> detalles) {
-        this.fecha = fecha;
-        this.total = total;
-        this.detalles = detalles;
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetalleVenta> detalles = new ArrayList<>();
+    
+    public Long getId() {
+        return id;
     }
 
-    public Long getIdVenta() {
-        return idVenta;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setIdVenta(Long idVenta) {
-        this.idVenta = idVenta;
+    public String getNombreCliente() {
+        return nombreCliente;
     }
 
-    public LocalDateTime getFecha() {
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public BigDecimal getTotal() {
-        return total;
+    public Double getTotalVenta() {
+        return totalVenta;
     }
 
-    public void setTotal(BigDecimal total) {
-        this.total = total;
+    public void setTotalVenta(Double totalVenta) {
+        this.totalVenta = totalVenta;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public List<DetalleVenta> getDetalles() {
