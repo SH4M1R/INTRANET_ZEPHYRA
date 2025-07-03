@@ -1,5 +1,6 @@
 package INTRANET_ZEPHYRA.demo.Servicios;
 
+import INTRANET_ZEPHYRA.demo.Entidad.Cliente;
 import INTRANET_ZEPHYRA.demo.Entidad.Producto;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Row;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ExcelExportServicio {
@@ -47,4 +49,32 @@ public class ExcelExportServicio {
         workbook.write(response.getOutputStream());
         workbook.close();
     }
+
+    public static void exportarClientes(List<Cliente> clientes, HttpServletResponse response) throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet hoja = workbook.createSheet("Clientes");
+
+        Row header = hoja.createRow(0);
+        header.createCell(0).setCellValue("ID");
+        header.createCell(1).setCellValue("Documento");
+        header.createCell(2).setCellValue("Nombre");
+        header.createCell(3).setCellValue("Correo");
+        header.createCell(4).setCellValue("Roles");
+
+        int idx = 1;
+        for (Cliente cliente : clientes) {
+            Row fila = hoja.createRow(idx++);
+            fila.createCell(0).setCellValue(cliente.getId());
+            fila.createCell(1).setCellValue(cliente.getDocumento());
+            fila.createCell(2).setCellValue(cliente.getNombre());
+            fila.createCell(3).setCellValue(cliente.getCorreo());
+            fila.createCell(4).setCellValue("Cliente");
+        }
+
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=clientes.xlsx");
+        workbook.write(response.getOutputStream());
+        workbook.close();
+    }
+
 }
