@@ -42,6 +42,35 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Para datos reales: puedes usar Thymeleaf para inyectar los datos en variables JS,
-    // o hacer una petición AJAX a un endpoint del backend que devuelva ventas por mes.
+const ctxIngresos = document.getElementById('chart-ingresos-mensuales').getContext('2d');
+new Chart(ctxIngresos, {
+    type: 'bar',
+    data: {
+        labels: labelsMeses,
+        datasets: [{
+            label: 'Total de ventas (S/)',
+            data: totalVentaPorMes,
+            backgroundColor: 'rgba(40, 167, 69, 0.7)',
+            borderColor: 'rgba(40, 167, 69, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: true },
+            title: { display: false }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return 'S/ ' + value.toFixed(2);
+                    }
+                }
+            }
+        }
+    }
+});
 });

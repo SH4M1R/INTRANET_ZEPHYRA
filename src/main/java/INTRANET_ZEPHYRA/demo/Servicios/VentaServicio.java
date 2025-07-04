@@ -108,4 +108,22 @@ public List<String> obtenerMesesVentas() {
     public long obtenerTotalVentas() {
         return ventaRepository.count();
     }
+
+    public List<Double> obtenerTotalVentaPorMes() {
+    List<Venta> ventas = ventaRepository.findAll();
+    Map<Integer, Double> totalPorMes = new TreeMap<>();
+
+    for (Venta v : ventas) {
+        int mes = v.getFecha().getMonthValue();
+        double total = v.getTotalVenta();
+
+        totalPorMes.put(mes, totalPorMes.getOrDefault(mes, 0.0) + total);
+    }
+
+    List<Double> valores = new ArrayList<>();
+    for (Integer mes : totalPorMes.keySet()) {
+        valores.add(totalPorMes.get(mes));
+    }
+    return valores;
+}
 }
