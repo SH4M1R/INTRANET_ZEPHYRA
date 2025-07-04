@@ -109,4 +109,11 @@ function calcularVuelto() {
             vueltoTexto.style.color = "green";
         }
     }
+
+    const formVenta = document.querySelector("form");
+    formVenta.addEventListener("submit", function () {
+        const visibleInput = document.getElementById("nombreCliente");
+        const hiddenInput = document.getElementById("inputNombreCliente");
+        hiddenInput.value = visibleInput.value;
+    });
 }
