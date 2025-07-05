@@ -22,7 +22,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             <td>${producto.tamaño}</td>
                             <td>S/ ${producto.precio.toFixed(2)}</td>
                             <td>${producto.stock}</td>
-                            <td><button class="btn btn-success btn-sm" onclick='agregarProducto(${JSON.stringify(producto)})'>Agregar</button></td>
+                            <td>
+                                <button type="button" class="btn btn-success btn-sm" onclick='agregarProducto(${JSON.stringify(producto)})'><i class="bi bi-file-plus"></i></button>
+                            </td>
                         `;
                         tablaBusquedaProductos.appendChild(fila);
                     });
@@ -34,10 +36,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btnCerrarTabla.addEventListener("click", () => {
         tablaBusquedaContainer.style.display = "none";
+        buscador.value = "";
     });
 
     document.getElementById("metodoPago").addEventListener("change", cambiarMetodoPago);
     document.getElementById("montoPagado").addEventListener("input", calcularVuelto);
+
+    const dniInput = document.getElementById("dniCliente");
+    dniInput.addEventListener("input", function () {
+        this.value = this.value.replace(/\D/g, "").slice(0, 8);
+    });
+
+    document.querySelectorAll(".izipay-input").forEach(input => {
+        input.addEventListener("input", function () {
+            this.value = this.value.replace(/\D/g, "").slice(0, 4);
+        });
+    });
+
+    const formVenta = document.querySelector("form");
+    formVenta.addEventListener("submit", function () {
+        document.getElementById("inputNombreCliente").value = document.getElementById("nombreCliente").value.trim();
+        document.getElementById("inputDniCliente").value = document.getElementById("dniCliente").value.trim();
+        document.getElementById("inputCorreoCliente").value = document.getElementById("correoCliente").value.trim();
+    });
 });
 
 function agregarProducto(producto) {
@@ -50,7 +71,7 @@ function agregarProducto(producto) {
         <td>S/ ${producto.precio.toFixed(2)}</td>
         <td><input type="number" value="1" class="form-control cantidad" min="1" max="${producto.stock}" onchange="actualizarSubtotal(this)"></td>
         <td class="subtotal">S/ ${producto.precio.toFixed(2)}</td>
-        <td><button type="button" class="btn btn-danger btn-sm" onclick="eliminarFila(this)">Eliminar</button></td>
+        <td><button type="button" class="btn btn-danger btn-sm" onclick="eliminarFila(this)"><i class="bi bi-trash3 me-1"></i></button></td>
     `;
 
     tabla.appendChild(fila);
@@ -80,7 +101,7 @@ function actualizarTotal() {
     });
     document.getElementById("total").textContent = "S/ " + total.toFixed(2);
     document.getElementById("inputTotalVenta").value = total.toFixed(2);
-    calcularVuelto(); // recalcula cuando cambian productos
+    calcularVuelto();
 }
 
 function cambiarMetodoPago() {
@@ -109,11 +130,13 @@ function calcularVuelto() {
             vueltoTexto.style.color = "green";
         }
     }
+}
 
-    const formVenta = document.querySelector("form");
-    formVenta.addEventListener("submit", function () {
-        const visibleInput = document.getElementById("nombreCliente");
-        const hiddenInput = document.getElementById("inputNombreCliente");
-        hiddenInput.value = visibleInput.value;
-    });
+function eliminarTodo() {
+    document.getElementById("detalleVentaBody").innerHTML = "";
+    actualizarTotal();
+}
+
+function imprimirVoucher() {
+    window.print();
 }

@@ -5,6 +5,18 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     color: #000;
     max-width: 960px;
+    min-height: 800px;
+}
+
+.pos-layout {
+    background-color: rgba(255, 255, 255, 0.98);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 25px;
+    max-width: 1000px;
+    min-height: 850px;
+    overflow: hidden;
+    position: relative;
 }
 
 h2 {
@@ -12,6 +24,7 @@ h2 {
     margin-bottom: 25px;
     font-weight: bold;
     color: #1a1a1a;
+    width: 100%;
 }
 
 label {
@@ -19,10 +32,19 @@ label {
     margin-bottom: 5px;
 }
 
+.form-label {
+    font-weight: bold;
+}
+
+input.form-control,
 select.form-select {
-    padding: 12px;
+    padding: 10px;
     font-size: 1rem;
     border-radius: 8px;
+}
+
+select.form-select {
+    padding: 12px;
 }
 
 .table {
@@ -54,7 +76,25 @@ tfoot td {
 #total {
     font-weight: bold;
     color: #198754;
-    font-size: 1.3rem;
+    font-size: 1.8rem;
+}
+
+.display-6 {
+    font-size: 1.5rem;
+}
+
+#tablaProductos th,
+#tablaProductos td {
+    vertical-align: middle;
+}
+
+.card {
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
 }
 
 .btn {
@@ -65,25 +105,74 @@ tfoot td {
     font-size: 1rem;
 }
 
-.btn-primary-border-subtle {
-    background-color: #0d6efd;
-    color: white;
-    border: none;
-}
-
-.btn-success-border-subtle {
-    background-color: #198754;
-    color: white;
-    border: none;
-}
-
-.btn-danger-border-subtle {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-}
-
 .btn:hover {
     opacity: 0.9;
     transition: 0.2s;
+}
+
+#nombreCliente,
+#dniCliente,
+#correoCliente {
+    min-height: 45px;
+}
+
+.buscador-resaltado {
+    border: 2px solid #28a745;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
+    font-weight: bold;
+    background-color: #f4fff6;
+}
+
+#tablaBusquedaContainer {
+    position: relative;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    border-radius: 8px;
+    max-height: 320px;
+    overflow-y: auto;
+    transition: max-height 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
+
+#tablaBusquedaContainer thead.sticky-top th {
+    background-color: #d4edda;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+#btnCerrarTabla {
+    z-index: 10;
+}
+
+#pagoYape img {
+    max-width: 100%;
+    height: auto;
+}
+
+#pagoEfectivo,
+#pagoYape,
+#pagoIzipay {
+    min-height: 220px;
+}
+
+#montoPagado,
+#vueltoTexto {
+    min-height: 45px;
+    display: block;
+}
+
+.izipay-input {
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 2px solid #ced4da;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+}
+
+.row-cols-2 > .col {
+    padding-inline: 0.25rem;
 }
