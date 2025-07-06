@@ -1,64 +1,39 @@
-.container {
-    padding: 30px;
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    color: #000;
-    max-width: 960px;
-    min-height: 800px;
-}
-
-.pos-layout {
-    background-color: rgba(255, 255, 255, 0.98);
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    padding: 25px;
-    max-width: 1000px;
-    min-height: 850px;
-    overflow: hidden;
-    position: relative;
+body {
+    background-color: #f5f5f5;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    font-weight: bold;
-    color: #1a1a1a;
-    width: 100%;
-}
-
-label {
     font-weight: 600;
-    margin-bottom: 5px;
+    color: #1a1a1a;
 }
 
 .form-label {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 input.form-control,
 select.form-select {
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 8px;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
 }
 
-select.form-select {
-    padding: 12px;
+.izipay-input {
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 .table {
-    margin-top: 20px;
-    background: white;
-    border-radius: 8px;
+    background-color: white;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .table th {
-    background-color: #198754;
-    color: white;
     text-align: center;
+    background-color: #343a40;
+    color: white;
 }
 
 .table td {
@@ -66,84 +41,34 @@ select.form-select {
     vertical-align: middle;
 }
 
-tfoot td {
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #14532d;
-    background-color: #f8f9fa;
-}
-
 #total {
+    font-size: 1.5rem;
     font-weight: bold;
     color: #198754;
-    font-size: 1.8rem;
-}
-
-.display-6 {
-    font-size: 1.5rem;
-}
-
-#tablaProductos th,
-#tablaProductos td {
-    vertical-align: middle;
-}
-
-.card {
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-}
-
-.bg-light {
-    background-color: #f8f9fa !important;
 }
 
 .btn {
-    margin: 10px 5px;
-    padding: 10px 25px;
-    font-weight: bold;
-    border-radius: 8px;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+.btn i {
     font-size: 1rem;
 }
 
-.btn:hover {
-    opacity: 0.9;
-    transition: 0.2s;
+@media (min-width: 768px) {
+    .main-content {
+        margin-left: 260px;
+        padding: 20px;
+    }
 }
 
-#nombreCliente,
-#dniCliente,
-#correoCliente {
-    min-height: 45px;
-}
-
-.buscador-resaltado {
-    border: 2px solid #28a745;
-    box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
-    font-weight: bold;
-    background-color: #f4fff6;
-}
-
-#tablaBusquedaContainer {
-    position: relative;
-    background-color: #ffffff;
-    border: 1px solid #dee2e6;
-    padding: 10px;
-    border-radius: 8px;
-    max-height: 320px;
-    overflow-y: auto;
-    transition: max-height 0.3s ease-in-out;
-    margin-bottom: 20px;
-}
-
-#tablaBusquedaContainer thead.sticky-top th {
-    background-color: #d4edda;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-#btnCerrarTabla {
-    z-index: 10;
+@media (max-width: 767px) {
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
 }
 
 #pagoYape img {
@@ -151,28 +76,39 @@ tfoot td {
     height: auto;
 }
 
-#pagoEfectivo,
-#pagoYape,
-#pagoIzipay {
-    min-height: 220px;
-}
-
-#montoPagado,
 #vueltoTexto {
     min-height: 45px;
-    display: block;
-}
-
-.izipay-input {
-    text-align: center;
-    font-weight: bold;
-    letter-spacing: 1px;
-    border: 2px solid #ced4da;
-    border-radius: 8px;
-    padding: 10px;
-    width: 100%;
+    line-height: 45px;
 }
 
 .row-cols-2 > .col {
     padding-inline: 0.25rem;
+}
+label{
+    color: black;
+}
+#contenedorMetodoPago {
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+}
+#ProcesoVenta {
+    overflow: hidden;
+    position: relative;
+}
+
+#tablaBusquedaContainer {
+    max-height: 120px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+#tablaBusquedaContainer thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #e9ecef;
 }

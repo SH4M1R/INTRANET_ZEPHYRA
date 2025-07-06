@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Realizar Venta</title>
+    <title>Proceso de Venta</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/ventas.css">
@@ -10,169 +10,160 @@
     <link rel="stylesheet" href="/css/Fondo.css">
 </head>
 <body>
+
 <div th:replace="fragmentos/navbar :: navbar"></div>
-
 <div class="main-content">
-    <div class="container pos-layout position-relative">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
-            <h2 class="w-100 text-center mb-3 mb-md-0">PROCESO DE VENTA</h2>
-            <div class="card p-2 px-3 text-center text-dark bg-light shadow-sm">
-                <label class="fw-bold mb-0">Nº de Venta:</label>
-                <span th:text="${numeroVenta}" class="fs-5">0001</span>
+    <div class="ProcesoVenta">
+        <div class="bg-white shadow-lg rounded-4 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-semibold mb-0">🧾 Proceso de Venta</h2>
+                <div class="bg-secondary-subtle text-dark p-3 rounded text-center">
+                    <small class="d-block fw-bold">Nº de Venta</small>
+                    <span class="fs-4" th:text="${numeroVenta}">0001</span>
+                </div>
             </div>
-        </div>
 
-        <form th:action="@{/registrar}" method="post">
-            <input type="hidden" name="nombreCliente" id="inputNombreCliente">
-            <input type="hidden" name="dniCliente" id="inputDniCliente">
-            <input type="hidden" name="correoCliente" id="inputCorreoCliente">
-            <input type="hidden" name="totalVenta" id="inputTotalVenta">
+            <form th:action="@{/registrar}" method="post">
+                <input type="hidden" name="nombreCliente" id="inputNombreCliente">
+                <input type="hidden" name="dniCliente" id="inputDniCliente">
+                <input type="hidden" name="correoCliente" id="inputCorreoCliente">
+                <input type="hidden" name="totalVenta" id="inputTotalVenta">
 
-            <div class="row">
-                <!-- Columna izquierda -->
-                <div class="col-md-7">
-                    <div class="row g-2 mb-3">
-                        <div class="col-md-4">
-                            <label for="nombreCliente" class="form-label">Nombre:</label>
-                            <input type="text" id="nombreCliente" class="form-control">
+                <div class="row g-4">
+                    <div class="col-md-7">
+                        <div class="border p-3 rounded bg-light-subtle mb-4">
+                            <h2 class="mb-3">👤 Datos del Cliente</h2>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="nombreCliente" class="form-label">Nombre</label>
+                                    <input type="text" id="nombreCliente" class="form-control" placeholder="Nombre completo">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="dniCliente" class="form-label">DNI</label>
+                                    <input type="text" id="dniCliente" class="form-control" maxlength="8" pattern="[0-9]{8}">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="correoCliente" class="form-label">Correo</label>
+                                    <input type="email" id="correoCliente" class="form-control" placeholder="ejemplo@correo.com">
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="dniCliente" class="form-label">DNI:</label>
-                            <input type="text" id="dniCliente" class="form-control" maxlength="8" required pattern="[0-9]{8}">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="correoCliente" class="form-label">Correo (opcional):</label>
-                            <input type="email" id="correoCliente" class="form-control" placeholder="ejemplo@correo.com">
-                        </div>
-                    </div>
 
-                    <div class="mb-3 d-flex align-items-center gap-2 position-relative">
-                        <input type="text" id="buscador" class="form-control buscador-resaltado" placeholder="🔍 Buscar producto por nombre...">
-                        <button type="button" id="btnCerrarTabla" class="btn btn-outline-danger">
-                            <i class="bi bi-x-circle"></i>
-                        </button>
-                    </div>
+                        <div class="d-flex mb-3">
+                            <input type="text" id="buscador" class="form-control me-2" placeholder="🔍 Buscar producto...">
+                            <button type="button" id="btnCerrarTabla" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
 
-                    <!-- Tabla de búsqueda -->
-                    <div class="table-responsive mb-3" id="tablaBusquedaContainer" style="display: none;">
-                        <div class="scroll-table">
-                            <table class="table table-bordered">
-                                <thead class="table-success sticky-top">
+                        <div id="tablaBusquedaContainer" class="mb-3" style="display: none;">
+                            <table class="table table-hover table-bordered align-middle">
+                                <thead class="table-secondary sticky-top">
                                     <tr>
                                         <th>Producto</th>
                                         <th>Color</th>
                                         <th>Talla</th>
                                         <th>Precio</th>
                                         <th>Stock</th>
-                                        <th>Acción</th>
+                                        <th>Agregar</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tablaBusquedaProductos"></tbody>
                             </table>
                         </div>
+
+                        <div>
+                            <table class="table table-striped table-bordered align-middle" id="tablaProductos">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Precio (S/)</th>
+                                        <th>Cantidad</th>
+                                        <th>Subtotal</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="detalleVentaBody"></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="text-end fw-bold">Total:</td>
+                                        <td colspan="2" id="total" class="text-success fw-bold fs-4">S/ 0.00</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
 
-                    <!-- Tabla productos agregados -->
-                    <table class="table" id="tablaProductos">
-                        <thead>
-                            <tr>
-                                <th>Producto</th>
-                                <th>Precio (S/)</th>
-                                <th>Cantidad</th>
-                                <th>Subtotal</th>
-                                <th>Opción</th>
-                            </tr>
-                        </thead>
-                        <tbody id="detalleVentaBody"></tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="3" class="text-end">TOTAL:</td>
-                                <td colspan="2" id="total" class="display-6 text-success">S/ 0.00</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                    <div class="col-md-5">
+                        <div class="border rounded bg-light-subtle p-3">
+                            <h2 class="mb-3">💳 Pago</h2>
 
-                <!-- Columna derecha -->
-                <div class="col-md-5">
-                    <div class="p-3 bg-light border rounded">
-                        <div class="mb-3">
-                            <label for="metodoPago" class="form-label">Método de Pago:</label>
-                            <select id="metodoPago" class="form-select">
-                                <option value="" selected disabled>Seleccione un método...</option>
-                                <option value="efectivo">Efectivo</option>
-                                <option value="yape">Yape</option>
-                                <option value="izipay">Izipay</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3" id="pagoEfectivo" style="display: none;">
-                            <div class="row g-2">
-                                <div class="col-md-6">
-                                    <div class="card p-2 h-100">
-                                        <label for="montoPagado" class="form-label">Monto recibido:</label>
-                                        <input type="number" id="montoPagado" class="form-control" min="0" step="0.1">
+                            <div class="mb-3">
+                                <label for="metodoPago" class="form-label">Método de pago</label>
+                                <select id="metodoPago" class="form-select">
+                                    <option disabled selected>Seleccione...</option>
+                                    <option value="efectivo">Efectivo</option>
+                                    <option value="yape">Yape</option>
+                                    <option value="izipay">Izipay</option>
+                                </select>
+                            </div>
+                            <div id="contenedorMetodoPago" class="mb-3">
+                            <div class="mb-3" id="pagoEfectivo" style="display: none;">
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <label class="form-label">Monto recibido</label>
+                                        <input type="number" id="montoPagado" class="form-control" min="0">
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card p-2 h-100">
-                                        <label class="form-label">Vuelto:</label>
-                                        <div id="vueltoTexto" class="fw-bold text-success fs-5">S/ 0.00</div>
+                                    <div class="col-6">
+                                        <label class="form-label">Vuelto</label>
+                                        <div id="vueltoTexto" class="form-control bg-white fw-bold text-success">S/ 0.00</div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="mb-3" id="pagoYape" style="display: none;">
-                            <div class="card p-3 text-center">
-                                <label class="form-label">Escanea el QR con Yape:</label>
-                                <div class="d-flex justify-content-center">
-                                    <img src="/img/qrYape.jpg" alt="QR Yape" style="width: 200px; height: 200px;">
+                            <div class="mb-3" id="pagoYape" style="display: none;">
+                                <label class="form-label">Escanee con Yape</label>
+                                <div class="text-center">
+                                    <img src="/img/qrYape.jpg" alt="QR Yape" class="img-fluid" style="max-width: 200px;">
+                                </div>
+                            </div>
+
+                            <div class="mb-3" id="pagoIzipay" style="display: none;">
+                                <label class="form-label">Datos Izipay</label>
+                                <input type="text" class="form-control mb-2 izipay-input" placeholder="Código operación">
+                                <input type="text" class="form-control izipay-input" placeholder="N° de tarjeta">
+                            </div>
+                            </div>
+                            <div class="row row-cols-2 g-2 mt-3">
+                                <div class="col d-grid">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-check-circle me-1"></i> Aceptar
+                                    </button>
+                                </div>
+                                <div class="col d-grid">
+                                    <button type="button" class="btn btn-secondary" onclick="imprimirVoucher()">
+                                        <i class="bi bi-printer me-1"></i> Imprimir
+                                    </button>
+                                </div>
+                                <div class="col d-grid">
+                                    <button type="button" class="btn btn-outline-danger" onclick="eliminarTodo()">
+                                        <i class="bi bi-trash3 me-1"></i> Limpiar
+                                    </button>
+                                </div>
+                                <div class="col d-grid">
+                                    <button type="button" class="btn btn-outline-dark" onclick="window.location.href='/inicio'">
+                                        <i class="bi bi-x-octagon me-1"></i> Cancelar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="mb-3" id="pagoIzipay" style="display: none;">
-                            <div class="card p-3">
-                                <label class="form-label">Ingrese datos de Izipay:</label>
-                                <input type="text" class="form-control mb-2 izipay-input" placeholder="Código de operación">
-                                <input type="text" class="form-control mb-2 izipay-input" placeholder="Número de tarjeta">
-                            </div>
-                        </div>
-
-                        <!-- Botones -->
-                        <div class="row row-cols-2 g-2 mt-4">
-                            <div class="col d-grid">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-check-circle me-1"></i> Aceptar
-                                </button>
-                            </div>
-                            <div class="col d-grid">
-                                <button type="button" class="btn btn-success" onclick="imprimirVoucher()">
-                                    <i class="bi bi-printer me-1"></i> Imprimir
-                                </button>
-                            </div>
-                            <div class="col d-grid">
-                                <button type="button" class="btn btn-warning" onclick="eliminarTodo()">
-                                    <i class="bi bi-trash3 me-1"></i> Eliminar Todo
-                                </button>
-                            </div>
-                            <div class="col d-grid">
-                                <button type="button" class="btn btn-danger" onclick="window.location.href='/inicio'">
-                                    <i class="bi bi-x-octagon me-1"></i> Cancelar
-                                </button>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
-
+    </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/ventas.js"></script>
-<script src="/js/sidebar.js"></script>
 </body>
 </html>

@@ -16,21 +16,6 @@ public class ClienteService {
     public List<Cliente> listarClientes() {
         return clienteRepository.findAll();
     }
-
-//    public void registrarCliente(String documento, String nombre, String correo) {
-//        if (clienteRepository.existsByDocumento(documento)) return;
-//
-//        Cliente cliente = new Cliente();
-//        cliente.setDocumento(documento);
-//        cliente.setNombre(nombre);
-//        cliente.setCorreo(correo);
-//
-//        Rol rolCliente = RolRepositorio.findByNombre("CLIENTE")
-//                .orElseThrow(() -> new RuntimeException("Rol CLIENTE no existe"));
-//
-//        cliente.agregarRol(rolCliente);
-//        clienteRepository.save(cliente);
-//    }
 public void registrarCliente(String documento, String nombre, String correo) {
     System.out.println("=== INICIANDO REGISTRO EN SERVICIO ===");
 
