@@ -1,14 +1,11 @@
 package INTRANET_ZEPHYRA.demo.Entidad;
 
-
+import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.*;
-
 @Entity
 @Table(name = "clientes")
-
 public class Cliente {
 
     @Id
@@ -26,14 +23,13 @@ public class Cliente {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "cliente_roles",
-            joinColumns = @JoinColumn(name = "cliente_id"),
-            inverseJoinColumns = @JoinColumn(name = "rol_id")
+        name = "cliente_roles",
+        joinColumns = @JoinColumn(name = "cliente_id"),
+        inverseJoinColumns = @JoinColumn(name = "rol_id")
     )
     private Set<Rol> roles = new HashSet<>();
 
-    public void agregarRol(Rol rol) { this.roles.add(rol); }
-
+    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -49,5 +45,5 @@ public class Cliente {
     public Set<Rol> getRoles() { return roles; }
     public void setRoles(Set<Rol> roles) { this.roles = roles; }
 
-
+    public void agregarRol(Rol rol) { this.roles.add(rol); }
 }

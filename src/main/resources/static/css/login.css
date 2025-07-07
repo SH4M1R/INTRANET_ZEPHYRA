@@ -24,3 +24,49 @@ body {
     background-color: #256535;
     border-color: #256535;
 }
+body.bg-overlay {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url(../img/fondo.jpg) center/cover no-repeat;
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    border-radius: 15px;
+    background-color: #ffffffcc; /* blanco con transparencia */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+    color: #2d7a42;
+    font-weight: 600;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+input.form-control {
+    border-radius: 8px;
+}
+
+.btn-success {
+    background-color: #2d7a42;
+    border-color: #2d7a42;
+    font-weight: 500;
+}
+
+.btn-success:hover {
+    background-color: #256535;
+    border-color: #256535;
+}
+
+.alert {
+    font-size: 0.95rem;
+}

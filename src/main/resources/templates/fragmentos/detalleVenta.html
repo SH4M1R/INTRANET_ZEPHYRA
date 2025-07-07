@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="detalleVentaModal">
+    <h5>Detalle de Venta N° <span th:text="${venta.id}">#</span></h5>
+    <p><strong>Cliente:</strong> <span th:text="${venta.cliente.nombre}">---</span></p>
+    <p><strong>Fecha:</strong> <span th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy HH:mm')}">---</span></p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+                <th>Método Pago</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="detalle : ${detalles}">
+                <td th:text="${detalle.producto.nombre}">Producto</td>
+                <td th:text="${detalle.cantidad}">1</td>
+                <td th:text="'S/ ' + ${detalle.producto.precio}">S/ 0.00</td>
+                <td th:text="'S/ ' + ${detalle.subtotal}">S/ 0.00</td>
+                <td th:text="${detalle.metodoPago}">---</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

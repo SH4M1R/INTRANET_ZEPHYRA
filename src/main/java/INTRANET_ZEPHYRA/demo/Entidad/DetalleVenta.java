@@ -1,11 +1,6 @@
 package INTRANET_ZEPHYRA.demo.Entidad;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class DetalleVenta {
@@ -16,15 +11,27 @@ public class DetalleVenta {
 
     private int cantidad;
 
-    private double subtotal;
+    private Double subtotal;
+
+    private String metodoPago;
+
+    private Double montoPagado;
+
+    private Double vuelto;
+
+    private String codigoIzipay;
+
+    private String numeroTarjeta;
+
+    @ManyToOne
+    @JoinColumn(name = "producto_id")
+    private Producto producto;
 
     @ManyToOne
     @JoinColumn(name = "venta_id")
     private Venta venta;
 
-    @ManyToOne
-    @JoinColumn(name = "producto_id")
-    private Producto producto;
+    // === Getters y Setters ===
 
     public Long getId() {
         return id;
@@ -42,20 +49,52 @@ public class DetalleVenta {
         this.cantidad = cantidad;
     }
 
-    public double getSubtotal() {
+    public Double getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(double subtotal) {
+    public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
     }
 
-    public Venta getVenta() {
-        return venta;
+    public String getMetodoPago() {
+        return metodoPago;
     }
 
-    public void setVenta(Venta venta) {
-        this.venta = venta;
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
+    }
+
+    public Double getMontoPagado() {
+        return montoPagado;
+    }
+
+    public void setMontoPagado(Double montoPagado) {
+        this.montoPagado = montoPagado;
+    }
+
+    public Double getVuelto() {
+        return vuelto;
+    }
+
+    public void setVuelto(Double vuelto) {
+        this.vuelto = vuelto;
+    }
+
+    public String getCodigoIzipay() {
+        return codigoIzipay;
+    }
+
+    public void setCodigoIzipay(String codigoIzipay) {
+        this.codigoIzipay = codigoIzipay;
+    }
+
+    public String getNumeroTarjeta() {
+        return numeroTarjeta;
+    }
+
+    public void setNumeroTarjeta(String numeroTarjeta) {
+        this.numeroTarjeta = numeroTarjeta;
     }
 
     public Producto getProducto() {
@@ -64,5 +103,13 @@ public class DetalleVenta {
 
     public void setProducto(Producto producto) {
         this.producto = producto;
+    }
+
+    public Venta getVenta() {
+        return venta;
+    }
+
+    public void setVenta(Venta venta) {
+        this.venta = venta;
     }
 }

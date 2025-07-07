@@ -10,14 +10,18 @@
     <link rel="stylesheet" href="/css/Listas.css">
 </head>
 <body>
+
+<!-- Navbar -->
 <div th:replace="fragmentos/navbar :: navbar"></div>
 
+<!-- Contenido principal -->
 <div class="main-content">
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Gestión de Ventas</h2>
         </div>
 
+        <!-- Tabla de ventas -->
         <div class="table-responsive">
             <table class="table table-bordered table-hover align-middle">
                 <thead class="table-success">
@@ -32,13 +36,15 @@
                 <tbody>
                     <tr th:each="venta : ${listaVentas}">
                         <td th:text="${venta.id}">1</td>
-                        <td th:text="${venta.nombreCliente != null ? venta.nombreCliente : '---'}">Cliente</td>
-                        <td th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy')}">01/07/2025</td>
-                        <td th:text="'S/ ' + ${venta.totalVenta}">S/ 0.00</td>
+                        <td th:text="${venta.cliente.nombre != null ? venta.cliente.nombre : '---'}">Cliente</td>
+                        <td th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy HH:mm')}">01/07/2025</td>
+                        <td th:text="'S/ ' + ${venta.total}">S/ 0.00</td>
                         <td>
-                            <a class="btn btn-info btn-sm" th:href="@{/ventas/detalle/{id}(id=${venta.id})}">
+                            <button class="btn btn-info btn-sm"
+                                    th:attr="data-id=${venta.id}"
+                                    onclick="verDetalle(this)">
                                 <i class="bi bi-eye"></i> Ver Detalle
-                            </a>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -46,7 +52,42 @@
         </div>
     </div>
 </div>
+
+<!-- Modal para detalle de venta -->
+<div class="modal fade" id="modalDetalleVenta" tabindex="-1" aria-labelledby="detalleVentaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detalleVentaLabel">Detalle de Venta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="detalleVentaContenido">
+                <!-- Aquí se cargará el fragmento con AJAX -->
+                <div class="text-center text-muted">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                    <p class="mt-2">Cargando detalles de la venta...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="window.print()">
+                    <i class="bi bi-printer"></i> Imprimir
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Cerrar
+                </button>
+                <button type="button" class="btn btn-outline-danger" onclick="cancelarOperacion()">
+                    <i class="bi bi-x-octagon"></i> Cancelar Operación
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-<script th:src="@{/js/sidebar.js}"></script>
+<script src="/js/gestionVentas.js"></script>
+
 </body>
 </html>

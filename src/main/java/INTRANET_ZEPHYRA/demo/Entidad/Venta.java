@@ -1,16 +1,9 @@
 package INTRANET_ZEPHYRA.demo.Entidad;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Venta {
@@ -19,19 +12,23 @@ public class Venta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombreCliente;
+    private LocalDateTime fecha;
 
-    private LocalDate fecha;
-
-    private Double totalVenta;
+    private Double total;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleVenta> detalles = new ArrayList<>();
-    
+
+    // ===== Getters y Setters =====
+
     public Long getId() {
         return id;
     }
@@ -40,28 +37,20 @@ public class Venta {
         this.id = id;
     }
 
-    public String getNombreCliente() {
-        return nombreCliente;
-    }
-
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
-    }
-
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 
-    public Double getTotalVenta() {
-        return totalVenta;
+    public Double getTotal() {
+        return total;
     }
 
-    public void setTotalVenta(Double totalVenta) {
-        this.totalVenta = totalVenta;
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
     public Usuario getUsuario() {
@@ -72,11 +61,24 @@ public class Venta {
         this.usuario = usuario;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     public List<DetalleVenta> getDetalles() {
         return detalles;
     }
 
     public void setDetalles(List<DetalleVenta> detalles) {
         this.detalles = detalles;
+    }
+
+    public void agregarDetalle(DetalleVenta detalle) {
+        detalle.setVenta(this);
+        this.detalles.add(detalle);
     }
 }

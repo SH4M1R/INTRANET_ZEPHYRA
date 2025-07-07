@@ -24,13 +24,20 @@
             </div>
 
             <form th:action="@{/registrar}" method="post">
+                <!-- Hidden inputs para cliente y pago -->
                 <input type="hidden" name="nombreCliente" id="inputNombreCliente">
                 <input type="hidden" name="dniCliente" id="inputDniCliente">
                 <input type="hidden" name="correoCliente" id="inputCorreoCliente">
                 <input type="hidden" name="totalVenta" id="inputTotalVenta">
+                <input type="hidden" name="metodoPago" id="inputMetodoPago">
+                <input type="hidden" name="montoPagado" id="inputMontoPagado">
+                <input type="hidden" name="vuelto" id="inputVuelto">
+                <input type="hidden" name="codigoOperacion" id="inputCodigoOperacion">
+                <input type="hidden" name="numeroTarjeta" id="inputNumeroTarjeta">
 
                 <div class="row g-4">
                     <div class="col-md-7">
+                        <!-- Cliente -->
                         <div class="border p-3 rounded bg-light-subtle mb-4">
                             <h2 class="mb-3">👤 Datos del Cliente</h2>
                             <div class="row g-3">
@@ -40,7 +47,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="dniCliente" class="form-label">DNI</label>
-                                    <input type="text" id="dniCliente" class="form-control" maxlength="8" pattern="[0-9]{8}">
+                                    <input type="text" id="dniCliente" class="form-control" maxlength="8">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="correoCliente" class="form-label">Correo</label>
@@ -49,6 +56,7 @@
                             </div>
                         </div>
 
+                        <!-- Buscador de productos -->
                         <div class="d-flex mb-3">
                             <input type="text" id="buscador" class="form-control me-2" placeholder="🔍 Buscar producto...">
                             <button type="button" id="btnCerrarTabla" class="btn btn-outline-secondary">
@@ -72,6 +80,7 @@
                             </table>
                         </div>
 
+                        <!-- Detalle venta -->
                         <div>
                             <table class="table table-striped table-bordered align-middle" id="tablaProductos">
                                 <thead class="table-dark">
@@ -94,6 +103,7 @@
                         </div>
                     </div>
 
+                    <!-- Pago -->
                     <div class="col-md-5">
                         <div class="border rounded bg-light-subtle p-3">
                             <h2 class="mb-3">💳 Pago</h2>
@@ -108,32 +118,33 @@
                                 </select>
                             </div>
                             <div id="contenedorMetodoPago" class="mb-3">
-                            <div class="mb-3" id="pagoEfectivo" style="display: none;">
-                                <div class="row g-2">
-                                    <div class="col-6">
-                                        <label class="form-label">Monto recibido</label>
-                                        <input type="number" id="montoPagado" class="form-control" min="0">
+                                <div class="mb-3" id="pagoEfectivo" style="display: none;">
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label class="form-label">Monto recibido</label>
+                                            <input type="number" id="montoPagado" class="form-control" min="0">
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label">Vuelto</label>
+                                            <div id="vueltoTexto" class="form-control bg-white fw-bold text-success">S/ 0.00</div>
+                                        </div>
                                     </div>
-                                    <div class="col-6">
-                                        <label class="form-label">Vuelto</label>
-                                        <div id="vueltoTexto" class="form-control bg-white fw-bold text-success">S/ 0.00</div>
+                                </div>
+
+                                <div class="mb-3" id="pagoYape" style="display: none;">
+                                    <label class="form-label">Escanee con Yape</label>
+                                    <div class="text-center">
+                                        <img src="/img/qrYape.jpg" alt="QR Yape" class="img-fluid" style="max-width: 200px;">
                                     </div>
+                                </div>
+
+                                <div class="mb-3" id="pagoIzipay" style="display: none;">
+                                    <label class="form-label">Datos Izipay</label>
+                                    <input type="text" class="form-control mb-2 izipay-input" id="codigoOperacion" placeholder="Código operación">
+                                    <input type="text" class="form-control izipay-input" id="numeroTarjeta" placeholder="N° de tarjeta">
                                 </div>
                             </div>
 
-                            <div class="mb-3" id="pagoYape" style="display: none;">
-                                <label class="form-label">Escanee con Yape</label>
-                                <div class="text-center">
-                                    <img src="/img/qrYape.jpg" alt="QR Yape" class="img-fluid" style="max-width: 200px;">
-                                </div>
-                            </div>
-
-                            <div class="mb-3" id="pagoIzipay" style="display: none;">
-                                <label class="form-label">Datos Izipay</label>
-                                <input type="text" class="form-control mb-2 izipay-input" placeholder="Código operación">
-                                <input type="text" class="form-control izipay-input" placeholder="N° de tarjeta">
-                            </div>
-                            </div>
                             <div class="row row-cols-2 g-2 mt-3">
                                 <div class="col d-grid">
                                     <button type="submit" class="btn btn-primary">
@@ -162,7 +173,8 @@
             </form>
         </div>
     </div>
-    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/ventas.js"></script>
 </body>

@@ -6,14 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     buscador.addEventListener("input", function () {
         const query = buscador.value.trim();
-
         if (query.length >= 2) {
             fetch(`/api/productos/buscar?nombre=${query}`)
                 .then(response => response.json())
                 .then(data => {
                     tablaBusquedaProductos.innerHTML = "";
                     tablaBusquedaContainer.style.display = data.length ? "block" : "none";
-
                     data.forEach(producto => {
                         const fila = document.createElement("tr");
                         fila.innerHTML = `
@@ -42,8 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("metodoPago").addEventListener("change", cambiarMetodoPago);
     document.getElementById("montoPagado").addEventListener("input", calcularVuelto);
 
-    const dniInput = document.getElementById("dniCliente");
-    dniInput.addEventListener("input", function () {
+    document.getElementById("dniCliente").addEventListener("input", function () {
         this.value = this.value.replace(/\D/g, "").slice(0, 8);
     });
 
@@ -53,11 +50,25 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    const formVenta = document.querySelector("form");
-    formVenta.addEventListener("submit", function () {
+    document.querySelector("form").addEventListener("submit", function () {
+        // Cliente
         document.getElementById("inputNombreCliente").value = document.getElementById("nombreCliente").value.trim();
         document.getElementById("inputDniCliente").value = document.getElementById("dniCliente").value.trim();
         document.getElementById("inputCorreoCliente").value = document.getElementById("correoCliente").value.trim();
+
+        // Método de pago
+        const metodoPago = document.getElementById("metodoPago").value;
+        const montoPagado = parseFloat(document.getElementById("montoPagado").value) || 0;
+        const total = parseFloat(document.getElementById("total").textContent.replace("S/ ", "")) || 0;
+        const vuelto = montoPagado - total;
+        const codigoOperacion = document.getElementById("codigoOperacion")?.value || "";
+        const numeroTarjeta = document.getElementById("numeroTarjeta")?.value || "";
+
+        document.getElementById("inputMetodoPago").value = metodoPago;
+        document.getElementById("inputMontoPagado").value = montoPagado;
+        document.getElementById("inputVuelto").value = vuelto >= 0 ? vuelto.toFixed(2) : "0.00";
+        document.getElementById("inputCodigoOperacion").value = codigoOperacion;
+        document.getElementById("inputNumeroTarjeta").value = numeroTarjeta;
     });
 });
 
@@ -65,7 +76,6 @@ function agregarProducto(producto) {
     const tabla = document.getElementById("detalleVentaBody");
     const fila = document.createElement("tr");
     fila.dataset.idProducto = producto.idProducto;
-
     fila.innerHTML = `
         <td>${producto.nombre}</td>
         <td>S/ ${producto.precio.toFixed(2)}</td>
@@ -73,7 +83,6 @@ function agregarProducto(producto) {
         <td class="subtotal">S/ ${producto.precio.toFixed(2)}</td>
         <td><button type="button" class="btn btn-danger btn-sm" onclick="eliminarFila(this)"><i class="bi bi-trash3 me-1"></i></button></td>
     `;
-
     tabla.appendChild(fila);
     actualizarTotal();
 }
@@ -105,14 +114,18 @@ function actualizarTotal() {
 }
 
 function cambiarMetodoPago() {
-    document.getElementById("pagoEfectivo").style.display = "none";
-    document.getElementById("pagoYape").style.display = "none";
-    document.getElementById("pagoIzipay").style.display = "none";
+    const efectivo = document.getElementById("pagoEfectivo");
+    const yape = document.getElementById("pagoYape");
+    const izipay = document.getElementById("pagoIzipay");
+
+    efectivo.style.display = "none";
+    yape.style.display = "none";
+    izipay.style.display = "none";
 
     const metodo = document.getElementById("metodoPago").value;
-    if (metodo === "efectivo") document.getElementById("pagoEfectivo").style.display = "block";
-    if (metodo === "yape") document.getElementById("pagoYape").style.display = "block";
-    if (metodo === "izipay") document.getElementById("pagoIzipay").style.display = "block";
+    if (metodo === "efectivo") efectivo.style.display = "block";
+    if (metodo === "yape") yape.style.display = "block";
+    if (metodo === "izipay") izipay.style.display = "block";
 }
 
 function calcularVuelto() {
